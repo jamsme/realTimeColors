@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Real-Time Colors</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+    
+    $(document).ready(function(){
+
+        var socket = io();
+        $('button').click(function(){
+            console.log($(this).attr('id'))
+            socket.emit('change_color', {value:$(this).attr('id')})
+        })
+
+        socket.on('update_color', function (data){
+            if (data.color == 'green'){
+                $('body').css({'background-color': 'green'})
+            }
+            if (data.color == 'blue'){
+                $('body').css({'background-color': 'blue'})
+            }
+            if (data.color == 'red'){
+                $('body').css({'background-color': 'red'})
+            }
+        })
+
+    });
+
+    </script>
+
+    <style>
+        button {
+            width: 30%;
+            height: 100px;
+            position: relative;
+            top: 180px;
+            left: 60px;
+            border-radius: 7px;
+            font-size: 18px;
+        }
+    </style>
+
+</head>
+<body>
+    <button id="green">Green</button> 
+    <button id="blue">Blue</button>
+    <button id="red">Red</button>
+</body>
+</html>
+
